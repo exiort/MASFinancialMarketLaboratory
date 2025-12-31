@@ -1,0 +1,8 @@
+pandas 
+numpy 
+sortedcontainers 
+sortedcontainers-stubs
+deap 
+matplotlib
+pysqlite3
+pydantic-settings

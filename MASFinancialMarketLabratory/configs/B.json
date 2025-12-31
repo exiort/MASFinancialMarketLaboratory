@@ -1,0 +1,245 @@
+{
+    "simulation_config": {
+        "simulation_macro_tick": 150,
+        "simulation_micro_tick": 80,
+        "init_macro_tick": 0,
+        "init_micro_tick": 0
+    },
+
+    "environment_config": {
+        "price_scale": 100000,
+        "db_path": "data/B.db",
+        "insight_l2_depth": 25,
+        "fee_rate_ppm": 1000,
+
+        "economy_scenario_seed": 1923,
+
+        "economy_scenario_tv_initial": 100.0,
+        "economy_scenario_tv_long_run_mean": 150.0,
+        "economy_scenario_tv_drift": 0.08,
+        "economy_scenario_tv_mean_reversion": 0.008,
+        "economy_scenario_tv_vol": 1.2,
+
+        "economy_scenario_r_initial": 0.02,
+        "economy_scenario_r_long_run_mean": 0.02,
+        "economy_scenario_r_mean_reversion": 0.2,
+        "economy_scenario_r_vol": 0.005,
+
+        "economy_scenario_tv_interval_base_width": 10.0,
+        "economy_scenario_tv_interval_vol": 2.5,
+
+        "economy_scenario_term_curve_slope": 0.001,
+        "economy_scenario_term_curve_curvature": 0.0,
+
+        "economy_scenario_deposit_terms": [3, 7, 15]
+    },
+
+    "agents_config": {
+        "global": {
+            "random_seed": 2001
+        },
+
+        "initial_endowment": {
+            "market_maker": {
+                "cash": {
+                    "distribution": "lognormal",
+                    "mean": 1000000,
+                    "std": 0.15
+                },
+                "shares": {
+                    "distribution": "uniform",
+                    "min": 8000,
+                    "max": 12000
+                }
+            },
+            "others": {
+                "cash": {
+                    "distribution": "lognormal",
+                    "mean": 250000,
+                    "std": 0.6
+                },
+                "shares": {
+                    "distribution": "uniform",
+                    "min": 2000,
+                    "max": 3000
+                }
+            }
+        },
+
+        "market_maker": {
+            "count": 100,
+            "parameters": {
+                "target_inventory_fraction": {
+                    "distribution": "uniform",
+                    "min": 0.45,
+                    "max": 0.55
+                },
+                "risk_lower_bound": {
+                    "distribution": "uniform",
+                    "min": 0.15,
+                    "max": 0.30
+                },
+                "risk_upper_bound": {
+                    "distribution": "uniform",
+                    "min": 0.70,
+                    "max": 0.85
+                },
+                "stabilization_tolerance": {
+                    "distribution": "uniform",
+                    "min": 0.07,
+                    "max": 0.15
+                },
+                "spread_size": {
+                    "distribution": "discrete_uniform",
+                    "values": [4, 5, 6, 7, 8]
+                },
+                "order_size": {
+                    "distribution": "discrete_uniform",
+                    "values": [5, 10, 15, 20]
+                },
+                "wait_time": {
+                    "distribution": "discrete_uniform",
+                    "values": [7, 10, 15, 20]
+                },
+                "skew_factor": {
+                    "distribution": "discrete_uniform",
+                    "values": [80, 100, 120]
+                }
+            }
+        },
+
+        "value_investor": {
+            "count": 400,
+            "parameters": {
+                "initial_optimism": {
+                    "distribution": "uniform",
+                    "min": 0.2,
+                    "max": 0.8
+                },
+                "stubbornness": {
+                    "distribution": "uniform",
+                    "min": 0.2,
+                    "max": 0.7
+                },
+                "belief_update_rate": {
+                    "distribution": "uniform",
+                    "min": 0.003,
+                    "max": 0.02
+                },
+                "mispricing_threshold": {
+                    "distribution": "uniform",
+                    "min": 0.0005,
+                    "max": 0.0015
+                },
+                "max_position_fraction": {
+                    "distribution": "uniform",
+                    "min": 0.4,
+                    "max": 0.7
+                },
+                "deposit_affinity": {
+                    "distribution": "uniform",
+                    "min": 0.02,
+                    "max": 0.05
+                },
+                "deposit_allocation_fraction": {
+                    "distribution": "uniform",
+                    "min": 0.3,
+                    "max": 0.6
+                },
+                "deposit_horizon_preference": {
+                    "distribution": "uniform",
+                    "min": 0.3,
+                    "max": 0.7
+                },
+                "max_order_size": {
+                    "distribution": "uniform",
+                    "min": 30,
+		    "max": 250
+                },
+                "patience_discount": {
+                    "distribution": "uniform",
+                    "min": 0.00001,
+                    "max": 0.00004
+                },
+                "patience_premium": {
+                    "distribution": "uniform",
+                    "min": 0.00001,
+                    "max": 0.00004
+                }
+            }
+        },
+
+        "momentum_trader": {
+            "count": 75,
+            "parameters": {
+                "momentum_window": {
+                    "distribution": "discrete_uniform",
+                    "values": [3, 5, 7, 10]
+                },
+                "entry_threshold": {
+                    "distribution": "uniform",
+                    "min": 0.02,
+                    "max": 0.05
+                },
+                "exit_threshold": {
+                    "distribution": "uniform",
+                    "min": 0.005,
+                    "max": 0.015
+                },
+                "aggressiveness": {
+                    "distribution": "uniform",
+                    "min": 0.4,
+                    "max": 0.8
+                },
+                "max_exposure_fraction": {
+                    "distribution": "uniform",
+                    "min": 0.5,
+                    "max": 0.8
+                },
+                "directional_bias": {
+                    "distribution": "uniform",
+                    "min": -0.1,
+                    "max": 0.1
+                },
+                "liquidity_baseline": {
+                    "distribution": "discrete_uniform",
+                    "values": [80, 100, 120]
+                }
+            }
+        },
+
+        "noise_trader": {
+            "count": 200,
+            "parameters": {
+                "p_trade": {
+                    "distribution": "uniform",
+                    "min": 0.04,
+                    "max": 0.12
+                },
+                "p_buy": {
+                    "distribution": "uniform",
+                    "min": 0.45,
+                    "max": 0.55
+                },
+                "p_market_order": {
+                    "distribution": "uniform",
+                    "min": 0.03,
+                    "max": 0.1
+                },
+                "min_quantity": {
+                    "distribution": "discrete_uniform",
+                    "values": [1, 2, 5]
+                },
+                "max_quantity": {
+                    "distribution": "uniform",
+                    "min": 30,
+		    "max": 80
+                },
+                "price_offset_ticks": {
+                    "distribution": "discrete_uniform",
+                    "values": [5, 6, 7, 8, 9, 10]
+                }
+            }
+        }
+    }
+}
