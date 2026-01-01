@@ -1,8 +1,9 @@
 import sys
 from pathlib import Path
+import time
 
 from environment import Environment
-from simulation import SimulationEngine, SimulationInitializer
+from simulation.core import SimulationEngine, SimulationInitializer
 
 
 def main():
@@ -17,37 +18,59 @@ def main():
         print(f"Usage: python -m mas_market_laboratory.mas_market_labratory [config_path]")
         sys.exit(1)
     
-    print("=" * 60)
+    print("=" * 75)
     print("MAS Market Laboratory - Multi-Agent Simulation")
-    print("=" * 60)
+    print("=" * 75)
     print(f"Config: {config_file.absolute()}")
     print()
     
-    print("Initializing configurations...")
+    print("Loading Configurations...", end="", flush=True)
     SimulationInitializer.INITIALIZE_CONFIGS(str(config_file.absolute()))
-    print(" ✔️Configurations loaded")
+    time.sleep(2)
+    print("\b\b\b - Completed ✔️")
     print()
     
-    print("Creating environment...")
+    print("Creating Environment...", end="", flush=True)
     env = Environment()
-    print("✔️ Environment created")
+    time.sleep(2)
+    print("\b\b\b - Completed ✔️")
     print()    
 
-    print("Creating simulation engine...")
+    print("Creating Simulation Engine...")
+    time.sleep(2)
     engine = SimulationEngine(env)
-    print("✔️ Simulation engine ready")
+    sys.stdout.write("\033[s")
+    sys.stdout.write("\033[F")
+    sys.stdout.write("\033[F")
+    sys.stdout.write("\033[F")
+    sys.stdout.write("\033[F")
+    sys.stdout.write("\033[F")
+    sys.stdout.write("\033[F")
+    sys.stdout.write("\033[F")
+    time.sleep(1)
+    print("Creating Simulation Engine - Completed ✔️")
+    sys.stdout.write("\033[u")
     print()
     
-    print("=" * 60)
-    print("Starting Simulation")
-    print("=" * 60)
+    print("=" * 75)
+    print("Simulation Starting...")
+    print("=" * 75)
+    time.sleep(3)
+    sys.stdout.write("\033[s")
+    sys.stdout.write("\033[F")
+    print(" " * 75)
+    sys.stdout.write("\033[F")
+    sys.stdout.write("\033[F")
+    print("\rSimulation Running...", flush=True)
+    sys.stdout.write("\033[u")
+    print("=" * 75)
+    sys.stdout.write("\033[F")
+    sys.stdout.write("\033[F")
     engine.run()
+    sys.stdout.write("\033[F")
+    print("Simulation Complete ✅")
+    print("=" * 75)
+
     
-    print()
-    print("=" * 60)
-    print("Simulation Complete")
-    print("=" * 60)
-
-
 if __name__ == "__main__":
     main()

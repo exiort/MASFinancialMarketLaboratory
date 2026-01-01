@@ -1,4 +1,4 @@
-from agents import Agent, MarketMaker, ValueInvestor, NoiseTrader, MomentumTrader
+from .agents import Agent, MarketMaker, ValueInvestor, NoiseTrader, MomentumTrader
 
 
 

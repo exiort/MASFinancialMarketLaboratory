@@ -2,6 +2,7 @@ from __future__ import annotations
 from typing import Dict, Any, List, Callable, Optional, Tuple
 import random
 import math
+import time
 
 from environment.views import AccountView
 from environment.configs import get_environment_configuration
@@ -42,12 +43,20 @@ class AgentManager:
     
     
     def initialize_agents(self) -> None:
-        print("Initializing Agents...")
+        print("\tInitializing Agents...", end="", flush=True)
+        time.sleep(2)
         self._initialize_market_makers()
         self._initialize_value_investors()
         self._initialize_momentum_traders()
         self._initialize_noise_traders()
-        print(f"Total Agents Initialized: {len(self.agents)}")
+        print("\b\b\b - Completed ✔️")
+        time.sleep(1)
+        
+        print(f"\t\tMarketMaker Agents Initialized: {len(self.market_makers)}")
+        print(f"\t\tValueInvestor Agents Initialized: {len(self.value_investors)}") 
+        print(f"\t\tMomentumTrader Agents Initialized: {len(self.momentum_traders)}")
+        print(f"\t\tNoiseTrader Agents Initialized: {len(self.noise_traders)}")
+        print(f"\t\tTotal Agents Initialized: {len(self.agents)}")
     
     
     def _get_agent_constants(self) -> AgentConstants:

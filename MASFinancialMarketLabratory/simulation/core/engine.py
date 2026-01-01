@@ -4,7 +4,7 @@ import time
 
 from environment import Environment
 from environment.views import AccountView
-from agents import Agent, ValueInvestor, MarketMaker, MomentumTrader
+from agents import Agent, ValueInvestor, MarketMaker
 from agents.models import AgentView, AgentFeedback
 from agents.intents import AgentIntent, PlaceOrderIntent, CancelOrderIntent, CreateDepositIntent
 
@@ -35,6 +35,8 @@ class SimulationEngine:
         while True:
             current_macro = SIM_REALTIME_DATA.MACRO_TICK
             current_micro = SIM_REALTIME_DATA.MICRO_TICK
+
+            print(f"\r\tSimulation running on Macro Tick - {current_macro}, Micro Tick - {current_micro}", end="")
             
             if current_micro == 0:
                 self.env.expire_session()
@@ -51,8 +53,6 @@ class SimulationEngine:
 
             if not SIM_REALTIME_DATA.step_hybrid_time():
                 break
-            
-        print("Simulation Completed.")
     
     
     def _update_views_macro(self) -> None:
@@ -81,16 +81,12 @@ class SimulationEngine:
             if isinstance(agent, (ValueInvestor, MarketMaker)):
                 economy_view = sim_data.ECONOMY_INSIGHT_VIEW
 
-            market_data_view = None
-            if isinstance(agent, (MomentumTrader, MarketMaker)):
-                market_data_view = sim_data.MARKET_DATA_VIEW
-                
             view = AgentView(
                 agent_id=agent_id,
                 timestamp=time.time(),
                 macro_tick=macro,
                 micro_tick=micro,
-                market_data_view=market_data_view,
+                market_data_view=sim_data.MARKET_DATA_VIEW,
                 economy_insight_view=economy_view
             )
             
